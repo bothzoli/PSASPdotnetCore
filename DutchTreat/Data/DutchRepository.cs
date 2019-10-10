@@ -1,10 +1,9 @@
 ﻿using DutchTreat.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DutchTreat.Data
 {
@@ -17,6 +16,37 @@ namespace DutchTreat.Data
         {
             _ctx = ctx;
             _logger = logger;
+        }
+
+        public void AddEntity(object model)
+        {
+            _logger.LogInformation("AddEntity was called");
+            _ctx.Add(model);
+        }
+
+        public IEnumerable<Order> GetAllOrders(bool includeItems)
+        {
+            try
+            {
+                _logger.LogInformation("GetAllOrders was called");
+
+                if (includeItems)
+                {
+                    return _ctx.Orders
+                        .Include(o => o.Items)
+                        .ThenInclude(i => i.Product)
+                        .ToList();
+                }
+                else
+                {
+                    return _ctx.Orders.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Failed to get all orders: {ex}");
+                return null;
+            }
         }
 
         public IEnumerable<Product> GetAllProducts()
@@ -32,6 +62,25 @@ namespace DutchTreat.Data
             catch (Exception ex)
             {
                 _logger.LogInformation($"Failed to get all products: {ex}");
+                return null;
+            }
+        }
+
+        public Order GetOrderById(int id)
+        {
+            try
+            {
+                _logger.LogInformation("GetOrderById was called");
+
+                return _ctx.Orders
+                    .Include(o => o.Items)
+                    .ThenInclude(i => i.Product)
+                    .Where(o => o.Id == id)
+                    .FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Failed to get order: {ex}");
                 return null;
             }
         }
@@ -63,7 +112,7 @@ namespace DutchTreat.Data
             catch (Exception ex)
             {
                 _logger.LogInformation($"Failed to save changes: {ex}");
-                return null;
+                return false;
             }
         }
     }
