@@ -7,5 +7,10 @@
       "Default": "Information",
       "Microsoft": "Warning"
     }
+  },
+  "Tokens": {
+    "Key": "asasdf;njhiujks;asdfoiwu;asdfdsfj;",
+    "Issuer": "localhost",
+    "Audience": "dutchtreat.com"
   }
 }
