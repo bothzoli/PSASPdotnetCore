@@ -1,17 +1,10 @@
 import { __decorate } from "tslib";
 import { Component } from "@angular/core";
 let ProductList = class ProductList {
-    constructor() {
-        this.products = [{
-                title: "First Product",
-                price: 19.99
-            }, {
-                title: "Second Product",
-                price: 9.99
-            }, {
-                title: "Third Product",
-                price: 14.99
-            }];
+    constructor(data) {
+        this.data = data;
+        this.products = [];
+        this.products = data.products;
     }
 };
 ProductList = __decorate([
