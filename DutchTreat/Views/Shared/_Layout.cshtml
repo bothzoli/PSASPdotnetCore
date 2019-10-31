@@ -3,9 +3,17 @@
 <head>
     <meta charset="utf-8" />
     <title>Dutch Treat: @ViewBag.Title</title>
-    <link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/css/site.css" rel="stylesheet" />
+
+    <environment names="Development">
+        <link href="~/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/node_modules/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/css/site.css" rel="stylesheet" />
+    </environment>
+    <environment names="Staging,Production">
+        <link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="~/css/site.css" rel="stylesheet" />
+    </environment>
 </head>
 <body>
     <header class="container">
@@ -56,9 +64,20 @@
         </div>
     </footer>
 
-    <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="~/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/index.js"></script>
+    <environment names="Development">
+        <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="~/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/index.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+            asp-fallback-src="~/node_modules/jquery/dist/jquery.min.js"
+            asp-fallback-test="window.jQuery"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+            asp-fallback-src="~/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"></script>
+        <script src="~/dist/dutchtreat.min.js"></script>
+    </environment>
     @RenderSection("scripts", false)
 </body>
 </html>
