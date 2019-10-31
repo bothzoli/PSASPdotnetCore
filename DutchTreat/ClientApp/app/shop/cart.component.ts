@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { DataService } from '../shared/dataService';
 
 @Component({
@@ -8,7 +10,13 @@ import { DataService } from '../shared/dataService';
 })
 export class Cart {
 
-  constructor(private data: DataService) { }
+  constructor(private data: DataService, private router: Router) { }
 
-
+  public onCheckout() {
+    if (this.data.loginRequired) {
+      this.router.navigate(["login"]);
+    } else {
+      this.router.navigate(["checkout"]);
+    }
+  }
 }
